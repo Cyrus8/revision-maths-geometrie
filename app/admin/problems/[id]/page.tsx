@@ -28,6 +28,7 @@ export default async function EditProblemPage({
     intro: problem.intro,
     difficulty: problem.difficulty,
     published: problem.published,
+    showCalculator: problem.showCalculator,
     order: problem.order,
     questions: problem.questions.map((question) => ({
       key: question.id,

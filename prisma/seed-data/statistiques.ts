@@ -5,6 +5,7 @@ export const statistiquesProblems: SeedProblem[] = [
     slug: "evolutions-successives-d-un-prix",
     title: "Évolutions successives du prix d'un article",
     difficulty: 2,
+    showCalculator: true,
     intro:
       "Le prix d'un article était de 80 € en janvier. Il augmente de 25 % en février, puis diminue de 20 % en mars.",
     questions: [
@@ -105,6 +106,7 @@ export const statistiquesProblems: SeedProblem[] = [
     slug: "moyenne-ponderee-par-classes",
     title: "Moyenne pondérée d'une série regroupée en classes",
     difficulty: 2,
+    showCalculator: true,
     intro:
       "Un professeur regroupe les notes (sur 20) de sa classe en classes d'amplitude 5 : [0 ; 5[ → 2 élèves, [5 ; 10[ → 6 élèves, [10 ; 15[ → 10 élèves, [15 ; 20] → 2 élèves. On suppose une répartition uniforme dans chaque classe, et on utilise donc son centre pour les calculs.",
     questions: [
@@ -199,6 +201,7 @@ export const statistiquesProblems: SeedProblem[] = [
     slug: "comparer-deux-series-avec-l-ecart-type",
     title: "Comparer deux séries statistiques avec l'écart type",
     difficulty: 3,
+    showCalculator: true,
     intro:
       "Deux équipes de basket ont marqué des paniers lors de 5 matchs. Équipe A : 9, 11, 12, 13, 15. Équipe B : 6, 10, 12, 14, 18.",
     questions: [

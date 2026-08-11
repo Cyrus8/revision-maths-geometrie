@@ -41,6 +41,7 @@ export type ProblemDTO = {
   intro: string;
   difficulty: number;
   published: boolean;
+  showCalculator: boolean;
   order: number;
   chapterId: string;
   questions: QuestionDTO[];

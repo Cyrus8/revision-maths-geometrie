@@ -23,6 +23,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
         intro: data.intro,
         difficulty: data.difficulty,
         published: data.published,
+        showCalculator: data.showCalculator,
         order: data.order,
         questions: {
           deleteMany: {},

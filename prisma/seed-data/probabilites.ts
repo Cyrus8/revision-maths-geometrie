@@ -103,6 +103,7 @@ export const probabilitesProblems: SeedProblem[] = [
     slug: "arbre-pondere-et-jetons",
     title: "Arbre pondéré : jetons rouges et bleus",
     difficulty: 2,
+    showCalculator: true,
     intro:
       "Une urne contient des jetons rouges (60 % de l'urne) et des jetons bleus (40 % de l'urne). Parmi les jetons rouges, 25 % sont marqués d'une étoile. Parmi les jetons bleus, 50 % sont marqués d'une étoile. On tire un jeton au hasard.",
     questions: [
@@ -195,6 +196,7 @@ export const probabilitesProblems: SeedProblem[] = [
     slug: "test-de-depistage-et-faux-positifs",
     title: "Test de dépistage et faux positifs",
     difficulty: 3,
+    showCalculator: true,
     intro:
       "Dans une population, une maladie touche 2 % des individus. Un test de dépistage est positif pour 90 % des personnes malades, mais aussi positif pour 5 % des personnes non malades (on parle alors de faux positif). On étudie un échantillon de 1000 personnes.",
     questions: [

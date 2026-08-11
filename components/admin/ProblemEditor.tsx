@@ -36,6 +36,7 @@ export type DraftProblem = {
   intro: string;
   difficulty: number;
   published: boolean;
+  showCalculator: boolean;
   order: number;
   questions: DraftQuestion[];
 };
@@ -80,6 +81,7 @@ export function ProblemEditor({
       intro: "",
       difficulty: 2,
       published: true,
+      showCalculator: false,
       order: 0,
       questions: [],
     }
@@ -146,6 +148,7 @@ export function ProblemEditor({
         intro: problem.intro,
         difficulty: problem.difficulty,
         published: problem.published,
+        showCalculator: problem.showCalculator,
         order: problem.order,
         questions: problem.questions.map((question) => ({
           type: question.type,
@@ -188,6 +191,7 @@ export function ProblemEditor({
     intro: problem.intro,
     difficulty: problem.difficulty,
     published: problem.published,
+    showCalculator: problem.showCalculator,
     order: problem.order,
     chapterId: problem.chapterId,
     questions: problem.questions.map((question, index) => ({
@@ -284,6 +288,21 @@ export function ProblemEditor({
                 />
                 <label htmlFor="published" className="text-sm text-foreground">
                   Publié (visible par les élèves)
+                </label>
+              </div>
+
+              <div className="flex items-center gap-2 pt-7">
+                <input
+                  id="showCalculator"
+                  type="checkbox"
+                  checked={problem.showCalculator}
+                  onChange={(event) =>
+                    setProblem((current) => ({ ...current, showCalculator: event.target.checked }))
+                  }
+                  className="h-4 w-4"
+                />
+                <label htmlFor="showCalculator" className="text-sm text-foreground">
+                  Afficher une calculatrice (calculs complexes, le but n&apos;est pas le calcul mental)
                 </label>
               </div>
 

@@ -12,6 +12,7 @@ export function toProblemDTO(problem: ProblemWithQuestions): ProblemDTO {
     intro: problem.intro,
     difficulty: problem.difficulty,
     published: problem.published,
+    showCalculator: problem.showCalculator,
     order: problem.order,
     chapterId: problem.chapterId,
     questions: problem.questions

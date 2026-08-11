@@ -21,6 +21,7 @@ export async function POST(request: NextRequest) {
         intro: data.intro,
         difficulty: data.difficulty,
         published: data.published,
+        showCalculator: data.showCalculator,
         order: data.order,
         questions: {
           create: data.questions.map((question, index) => ({

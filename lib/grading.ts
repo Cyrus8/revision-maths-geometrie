@@ -35,17 +35,21 @@ export function isAnswerCorrect(question: QuestionDTO, rawAnswer: string): boole
   return data.accepted.some((accepted) => normalizeText(accepted) === normalized);
 }
 
+export const WRONG_ATTEMPT_MALUS = 1;
+
 export type QuestionOutcome = {
   status: "correct" | "skipped";
   hintsUsed: number;
+  wrongAttempts: number;
 };
 
 export function questionScore(question: QuestionDTO, outcome: QuestionOutcome | undefined): number {
   if (!outcome || outcome.status === "skipped") return 0;
-  const malus = question.hints
+  const hintMalus = question.hints
     .slice(0, outcome.hintsUsed)
     .reduce((sum, hint) => sum + hint.malus, 0);
-  return Math.max(0, question.points - malus);
+  const wrongMalus = outcome.wrongAttempts * WRONG_ATTEMPT_MALUS;
+  return Math.max(0, question.points - hintMalus - wrongMalus);
 }
 
 export function maxPoints(questions: QuestionDTO[]): number {

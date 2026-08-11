@@ -55,19 +55,20 @@ model Chapter {
 }
 
 model Problem {
-  id         String     @id @default(cuid())
-  slug       String
-  title      String
-  intro      String
-  difficulty Int        @default(2)
-  published  Boolean    @default(true)
-  order      Int        @default(0)
-  chapterId  String
-  chapter    Chapter    @relation(fields: [chapterId], references: [id], onDelete: Cascade)
-  questions  Question[]
-  attempts   Attempt[]
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
+  id             String     @id @default(cuid())
+  slug           String
+  title          String
+  intro          String
+  difficulty     Int        @default(2)
+  published      Boolean    @default(true)
+  showCalculator Boolean    @default(false)
+  order          Int        @default(0)
+  chapterId      String
+  chapter        Chapter    @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  questions      Question[]
+  attempts       Attempt[]
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
 
   @@unique([chapterId, slug])
 }
@@ -92,13 +93,13 @@ model Question {
 }
 
 model Student {
-  id           String    @id @default(cuid())
-  email        String    @unique
+  id           String               @id @default(cuid())
+  email        String               @unique
   passwordHash String
   passwordSalt String
   name         String
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
   attempts     Attempt[]
   resetTokens  PasswordResetToken[]
 }
@@ -140,13 +141,14 @@ model Attempt {
 }
 
 model AttemptAnswer {
-  id           String                 @id @default(cuid())
-  attemptId    String
-  attempt      Attempt                @relation(fields: [attemptId], references: [id], onDelete: Cascade)
-  questionId   String
-  status       QuestionOutcomeStatus
-  hintsUsed    Int                    @default(0)
-  pointsEarned Int
+  id            String                @id @default(cuid())
+  attemptId     String
+  attempt       Attempt               @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  questionId    String
+  status        QuestionOutcomeStatus
+  hintsUsed     Int                   @default(0)
+  wrongAttempts Int                   @default(0)
+  pointsEarned  Int
 
   @@index([attemptId])
 }

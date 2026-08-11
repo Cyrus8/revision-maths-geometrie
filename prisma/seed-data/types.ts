@@ -16,6 +16,7 @@ export type SeedProblem = {
   title: string;
   intro: string;
   difficulty: number;
+  showCalculator?: boolean;
   questions: SeedQuestion[];
 };
 

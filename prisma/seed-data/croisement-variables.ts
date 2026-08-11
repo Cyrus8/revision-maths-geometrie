@@ -193,6 +193,7 @@ export const croisementVariablesProblems: SeedProblem[] = [
     slug: "sondage-marque-de-smartphone",
     title: "Sondage sur la marque de smartphone préférée",
     difficulty: 3,
+    showCalculator: true,
     intro:
       "Un sondage sur la marque de smartphone préférée a été réalisé auprès de 300 personnes, réparties en deux tranches d'âge. Chez les 15-25 ans (180 personnes), 108 préfèrent la marque A, les autres la marque B. Chez les 26 ans et plus (120 personnes), 36 préfèrent la marque A, les autres la marque B.",
     questions: [

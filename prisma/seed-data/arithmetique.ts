@@ -5,6 +5,7 @@ export const arithmetiqueProblems: SeedProblem[] = [
     slug: "rangement-de-bulbes",
     title: "Le rangement des bulbes de tulipes",
     difficulty: 2,
+    showCalculator: true,
     intro:
       "Un jardinier dispose de 84 bulbes de tulipes et de 126 bulbes de jonquilles. Il veut former des rangées toutes identiques (même nombre de tulipes et même nombre de jonquilles par rangée), en utilisant tous les bulbes, avec le plus grand nombre de rangées possible.",
     questions: [
@@ -128,6 +129,7 @@ export const arithmetiqueProblems: SeedProblem[] = [
     slug: "codes-et-parite",
     title: "Codes salariés et parité",
     difficulty: 2,
+    showCalculator: true,
     intro:
       "Une entreprise attribue à chaque salarié un code composé d'un nombre entier. Certaines règles internes de validation reposent sur la parité (pair/impair) de ce nombre.",
     questions: [

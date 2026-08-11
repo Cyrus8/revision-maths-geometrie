@@ -106,6 +106,7 @@ export const fonctionsRepresentationProblems: SeedProblem[] = [
     slug: "duree-de-trajet-et-fonction-inverse",
     title: "Durée d'un trajet et fonction inverse",
     difficulty: 2,
+    showCalculator: true,
     intro:
       "On modélise la durée t (en heures) d'un trajet de 120 km en fonction de la vitesse moyenne v (en km/h, avec v > 0) par t(v) = 120 / v.",
     questions: [

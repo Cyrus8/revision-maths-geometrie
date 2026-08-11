@@ -69,6 +69,7 @@ export const problemInputSchema = z.object({
   intro: z.string().min(1, "L'introduction est requise."),
   difficulty: z.number().int().min(1).max(3),
   published: z.boolean(),
+  showCalculator: z.boolean(),
   order: z.number().int().min(0),
   questions: z.array(questionInputSchema).min(1, "Au moins une question est requise."),
 });
