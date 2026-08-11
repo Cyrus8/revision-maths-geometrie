@@ -25,11 +25,13 @@ export function ProblemPlayer({
   chapterSlug,
   chapterName,
   previewMode = false,
+  guestMode = false,
 }: {
   problem: ProblemDTO;
   chapterSlug: string;
   chapterName: string;
   previewMode?: boolean;
+  guestMode?: boolean;
 }) {
   const [startedAt] = useState(() => new Date().toISOString());
   const [index, setIndex] = useState(0);
@@ -90,7 +92,7 @@ export function ProblemPlayer({
   }
 
   async function submitAttempt() {
-    if (previewMode) {
+    if (previewMode || guestMode) {
       setResult({ score20: scoreOn20(liveEarned, total), earnedPoints: liveEarned, maxPoints: total });
       return;
     }
@@ -141,6 +143,8 @@ export function ProblemPlayer({
     setSubmitError("");
   }
 
+  const currentPath = `/seconde/${chapterSlug}/${problem.slug}`;
+
   if (result) {
     return (
       <ResultsScreen
@@ -150,12 +154,24 @@ export function ProblemPlayer({
         result={result}
         onRestart={restart}
         previewMode={previewMode}
+        guestMode={guestMode}
+        currentPath={currentPath}
       />
     );
   }
 
   return (
     <div className="space-y-5">
+      {guestMode && (
+        <div className="rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
+          Mode invité : ta note ne sera pas enregistrée.{" "}
+          <Link href={`/register?next=${encodeURIComponent(currentPath)}`} className="font-medium underline">
+            Crée un compte
+          </Link>{" "}
+          pour suivre ta progression.
+        </div>
+      )}
+
       <Card className="p-5 sm:p-6">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
@@ -365,6 +381,8 @@ function ResultsScreen({
   result,
   onRestart,
   previewMode,
+  guestMode,
+  currentPath,
 }: {
   problem: ProblemDTO;
   chapterSlug: string;
@@ -372,6 +390,8 @@ function ResultsScreen({
   result: SubmitResult;
   onRestart: () => void;
   previewMode: boolean;
+  guestMode: boolean;
+  currentPath: string;
 }) {
   const tier =
     result.score20 >= 16
@@ -391,6 +411,23 @@ function ResultsScreen({
           {result.earnedPoints} / {result.maxPoints} points bruts
         </p>
         <p className="mt-3 text-base text-foreground">{tier}</p>
+
+        {guestMode && (
+          <div className="mt-5 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
+            Cette note n&apos;a pas été enregistrée (mode invité).{" "}
+            <Link
+              href={`/register?next=${encodeURIComponent(currentPath)}`}
+              className="font-medium underline"
+            >
+              Crée un compte
+            </Link>{" "}
+            ou{" "}
+            <Link href={`/login?next=${encodeURIComponent(currentPath)}`} className="font-medium underline">
+              connecte-toi
+            </Link>{" "}
+            pour suivre ta progression.
+          </div>
+        )}
 
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <Button type="button" onClick={onRestart}>
