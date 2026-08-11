@@ -1,0 +1,152 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum QuestionType {
+  QCM
+  NUMERIC
+  TEXT
+}
+
+model ClassLevel {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  name      String
+  order     Int      @default(0)
+  active    Boolean  @default(true)
+  themes    Theme[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Theme {
+  id           String     @id @default(cuid())
+  slug         String
+  name         String
+  description  String?
+  order        Int        @default(0)
+  classLevelId String
+  classLevel   ClassLevel @relation(fields: [classLevelId], references: [id], onDelete: Cascade)
+  chapters     Chapter[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@unique([classLevelId, slug])
+}
+
+model Chapter {
+  id          String    @id @default(cuid())
+  slug        String
+  name        String
+  description String?
+  order       Int       @default(0)
+  themeId     String
+  theme       Theme     @relation(fields: [themeId], references: [id], onDelete: Cascade)
+  problems    Problem[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([themeId, slug])
+}
+
+model Problem {
+  id         String     @id @default(cuid())
+  slug       String
+  title      String
+  intro      String
+  difficulty Int        @default(2)
+  published  Boolean    @default(true)
+  order      Int        @default(0)
+  chapterId  String
+  chapter    Chapter    @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  questions  Question[]
+  attempts   Attempt[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  @@unique([chapterId, slug])
+}
+
+model Question {
+  id          String       @id @default(cuid())
+  problemId   String
+  problem     Problem      @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  order       Int
+  type        QuestionType
+  statement   String
+  points      Int
+  difficulty  Int          @default(1)
+  data        Json
+  hints       Json
+  solution    String
+  explanation String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@index([problemId])
+}
+
+model Student {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  passwordSalt String
+  name         String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  attempts     Attempt[]
+  resetTokens  PasswordResetToken[]
+}
+
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  studentId String
+  student   Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([studentId])
+}
+
+enum QuestionOutcomeStatus {
+  CORRECT
+  SKIPPED
+  INCORRECT
+}
+
+model Attempt {
+  id           String          @id @default(cuid())
+  studentId    String
+  student      Student         @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  problemId    String
+  problem      Problem         @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  earnedPoints Int
+  maxPoints    Int
+  score20      Float
+  startedAt    DateTime
+  finishedAt   DateTime        @default(now())
+  answers      AttemptAnswer[]
+  createdAt    DateTime        @default(now())
+
+  @@index([studentId])
+  @@index([problemId])
+}
+
+model AttemptAnswer {
+  id           String                 @id @default(cuid())
+  attemptId    String
+  attempt      Attempt                @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  questionId   String
+  status       QuestionOutcomeStatus
+  hintsUsed    Int                    @default(0)
+  pointsEarned Int
+
+  @@index([attemptId])
+}
